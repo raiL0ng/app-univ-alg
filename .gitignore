@@ -6,3 +6,5 @@
 *.synctex.gz
 lab1.tex
 lab1.pdf
+test.py
+_minted-lab2/
