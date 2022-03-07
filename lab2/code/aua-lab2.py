@@ -158,6 +158,44 @@ def get_diagramm_Hasse(dvdrs_list, min_elems):
     return diagramm
 
 
+#
+def get_closure_system(objs, attrs, a, ob_len, at_len):
+    set_z = [objs]
+    for i in range(at_len):
+        cur_slice = []
+        for j in range(ob_len):
+            if a[j][i]:
+                cur_slice.append(objs[j])
+            else:
+                continue
+        cur_slice = set(cur_slice)
+        for subset in set_z:
+            subset = set(subset)
+            tmp = cur_slice & subset
+            tmp = list(tmp)
+            if tmp not in set_z:
+                set_z.append(tmp)
+    return set_z
+
+
+#
+def get_lattice_of_concepts(set_z, objs, attrs, a, ob_len, at_len):
+    set_iso = {}
+    for i in range(ob_len):
+        cur_slice = []
+        for j in range(at_len):
+            if a[i][j]:
+                cur_slice.append(attrs[j])
+        set_iso[objs[i]] = cur_slice
+    # for subset in set_z:
+    #     fl = False
+    #     for el in subset:
+    #         if fl == False:
+    #             fl = True
+    #         else:
+    #             tmp = 
+
+
 # Вывод матрицы
 def print_matrix(a, n):
     cnt = 0
@@ -241,6 +279,30 @@ def print_representative_system(repsys, n):
 
 #
 
+
+#
+def construction_lattice_of_concepts():
+    print('Enter set of objects:')
+    s = input()
+    objs = [i for i in s.split(' ')]
+    print('Enter set of attributes:')
+    s = input()
+    attrs = [i for i in s.split(' ')]
+    print('Enter a binary relation matrix:')
+    a = []
+    ob_len = len(objs)
+    at_len = len(attrs)
+    for i in range(ob_len):
+        tmp = input().split()
+        for j in range(len(tmp)):
+            tmp[j] = int(tmp[j])
+        a.append(tmp)
+    a = np.array(a)
+    print('Closure system:', end=' ')
+    set_z = get_closure_system(objs, attrs, a, len(objs), len(attrs))
+    print(set_z)
+
+    
 # Построение диаграммы Хассе (меню)
 def construction_of_Hasse_diagramm():
     print('Enter some number')
@@ -352,7 +414,7 @@ def choose_mode():
     elif bl == '2':
         construction_of_Hasse_diagramm()
     elif bl == '3':
-        print('dfdf')
+        construction_lattice_of_concepts()
     elif bl == '4':
         return
     else:
