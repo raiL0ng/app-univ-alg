@@ -1,4 +1,3 @@
-import numpy as np
 
 # Построение матрицы по бинарному отношению
 def go_to_matrix(br, n):
@@ -86,37 +85,59 @@ def get_level_list(dvdrs):
 
 
 # Нахождение минимальных элементов
-def get_minimal_elem(dvdrs_list, dvdrs):
-    minel_len = len(dvdrs_list[dvdrs[0]])
-    min_el_list = []
-    for key in dvdrs_list:
-        tmp = len(dvdrs_list[key])
-        if minel_len > tmp:
-            minel_len = tmp
-    for key in dvdrs_list:
-        if minel_len == len(dvdrs_list[key]):
-            min_el_list.append([key, dvdrs_list[key]])
-    return min_el_list
+def get_minimal_elem(slices_list, is_div_mode, set_x, strt=0):
+    if is_div_mode:
+        minel_len = len(slices_list[set_x[0]])
+        min_el_list = []
+        for key in slices_list:
+            tmp = len(slices_list[key])
+            if minel_len > tmp:
+                minel_len = tmp
+        for key in slices_list:
+            if minel_len == len(slices_list[key]):
+                min_el_list.append(key)
+        return min_el_list
+    else:
+        min_el_list = []
+        for i in range(strt, len(slices_list)):
+            fl = True
+            for j in range(strt, len(slices_list[i])):
+                if slices_list[i][j] != 0 and i != j:
+                    fl = False
+            if fl:
+                min_el_list.append(set_x[i])
+        return min_el_list
 
 
 # Нахождение максимальных элементов
-def get_maximal_elem(dvdrs_list, dvdrs):
-    maxel_len = len(dvdrs_list[dvdrs[0]])
-    max_el_list = []
-    for key in dvdrs_list:
-        tmp = len(dvdrs_list[key])        
-        if maxel_len < tmp:
-            maxel_len = tmp
-    for key in dvdrs_list:
-        if maxel_len == len(dvdrs_list[key]):
-            max_el_list.append([key, dvdrs_list[key]])
-    return max_el_list
+def get_maximal_elem(slices_list, is_div_mode, set_x, strt=0):
+    if is_div_mode:
+        maxel_len = len(slices_list[set_x[0]])
+        max_el_list = []
+        for key in slices_list:
+            tmp = len(slices_list[key])        
+            if maxel_len < tmp:
+                maxel_len = tmp
+        for key in slices_list:
+            if maxel_len == len(slices_list[key]):
+                max_el_list.append(key)
+        return max_el_list
+    else:
+        max_el_list = []
+        for i in range(strt, len(slices_list)):
+            fl = True
+            for j in range(strt, len(slices_list[i])):
+                if slices_list[j][i] != 0 and i != j:
+                    fl = False
+            if fl:
+                max_el_list.append(set_x[i])
+        return max_el_list
 
 
 # Нахождение наименьшего элемента
 def get_least_elem(min_elems):
     if len(min_elems) == 1:
-        return min_elems[0][0]
+        return min_elems[0]
     else:
         return -1
 
@@ -124,24 +145,35 @@ def get_least_elem(min_elems):
 # Нахождение наибольшего элемента
 def get_greatest_elem(max_elems):
     if len(max_elems) == 1:
-        return max_elems[0][0]
+        return max_elems[0]
     else:    
         return -1
 
 
 # Получение диаграммы Хассе
-def get_diagramm_Hasse(dvdrs_list, min_elems):
+def get_diagramm_Hasse(dvdrs_list, is_div_mode, set_x):
     diagramm = []
-    lvl = 1
-    cur_len = len(min_elems[0][1])
+    lvl = 0
     el_and_lvl = []
-    for key in dvdrs_list:
-        tmp_len = len(dvdrs_list[key])
-        if cur_len < tmp_len:
+    if is_div_mode:
+        while dvdrs_list != {}:
+            min_elems = get_minimal_elem(dvdrs_list, True, set_x)
+            lvl += 1  
+            for el in min_elems:
+                set_x.remove(el)
+                el_and_lvl.append([el, lvl])
+                del dvdrs_list[el]
+                for key in dvdrs_list:
+                    if el in dvdrs_list[key]:  
+                        dvdrs_list[key].remove(el)
+    else:
+        k = 0
+        while k != len(set_x):
+            min_elems = get_minimal_elem(dvdrs_list, False, set_x, k)
             lvl += 1
-            cur_len = tmp_len
-        el_and_lvl.append([key, lvl])
-    
+            for el in min_elems:
+                el_and_lvl.append([el, lvl])
+                k += 1
     tmp_len = len(el_and_lvl)
     for i in range(tmp_len):
         next_lvl = el_and_lvl[i][1] + 1
@@ -153,12 +185,13 @@ def get_diagramm_Hasse(dvdrs_list, min_elems):
                 arr_next_lvl.append(el_and_lvl[j][0])
             if el_and_lvl[j][1] == prev_lvl:
                 arr_prev_lvl.append(el_and_lvl[j][0])
-        diagramm.append((el_and_lvl[i][0], el_and_lvl[i][1], arr_prev_lvl, arr_next_lvl))
-        i += 1    
+        diagramm.append(( el_and_lvl[i][0], el_and_lvl[i][1]
+                        , arr_prev_lvl, arr_next_lvl) )
     return diagramm
+        
 
 
-#
+# Нахождение системы замыкания
 def get_closure_system(objs, attrs, a, ob_len, at_len):
     set_z = [objs]
     for i in range(at_len):
@@ -168,17 +201,15 @@ def get_closure_system(objs, attrs, a, ob_len, at_len):
                 cur_slice.append(objs[j])
             else:
                 continue
-        cur_slice = set(cur_slice)
         for subset in set_z:
-            subset = set(subset)
-            tmp = cur_slice & subset
-            tmp = list(tmp)
+            tmp = list(set(cur_slice) & set(subset))
+            tmp.sort()
             if tmp not in set_z:
                 set_z.append(tmp)
     return set_z
 
 
-#
+# Нахождение решетки концептов
 def get_lattice_of_concepts(set_z, objs, attrs, a, ob_len, at_len):
     set_iso = {}
     for i in range(ob_len):
@@ -187,13 +218,22 @@ def get_lattice_of_concepts(set_z, objs, attrs, a, ob_len, at_len):
             if a[i][j]:
                 cur_slice.append(attrs[j])
         set_iso[objs[i]] = cur_slice
-    # for subset in set_z:
-    #     fl = False
-    #     for el in subset:
-    #         if fl == False:
-    #             fl = True
-    #         else:
-    #             tmp = 
+    set_isomorph = []
+    for el in set_z:
+        tmp = set([])
+        for i in range(len(el)):
+            if i == 0:
+                tmp = set(set_iso[el[i]])
+            else:
+                tmp = tmp & set(set_iso[el[i]])
+        if el == []:
+            set_isomorph.append([el, attrs])
+        else:
+            tmp = list(tmp)
+            tmp.sort()
+            set_isomorph.append([el, tmp])
+    
+    return set_isomorph
 
 
 # Вывод матрицы
@@ -277,10 +317,7 @@ def print_representative_system(repsys, n):
             print('}', end=', ')
 
 
-#
-
-
-#
+# Построение решетки концептов (меню)
 def construction_lattice_of_concepts():
     print('Enter set of objects:')
     s = input()
@@ -297,55 +334,108 @@ def construction_lattice_of_concepts():
         for j in range(len(tmp)):
             tmp[j] = int(tmp[j])
         a.append(tmp)
-    a = np.array(a)
     print('Closure system:', end=' ')
     set_z = get_closure_system(objs, attrs, a, len(objs), len(attrs))
     print(set_z)
+    print('Lattice of concepts:', end= ' ')
+    set_isomorph = get_lattice_of_concepts(set_z, objs, attrs, a, ob_len, at_len)
+    print(set_isomorph)
 
+    return choose_mode()
     
 # Построение диаграммы Хассе (меню)
 def construction_of_Hasse_diagramm():
-    print('Enter some number')
-    num = int(input())
-    print('Enter exception numbers, else press 0')
-    s = input()
-    exptn = [int(i) for i in s.split(' ')]
-    dvdrs = get_set_of_common_dividers(num, exptn)
-    dvdrs_list = get_level_list(dvdrs)
-    
-    min_elems = get_minimal_elem(dvdrs_list, dvdrs)
-    max_elems = get_maximal_elem(dvdrs_list, dvdrs)
-    least_elem = get_least_elem(min_elems)
-    greatest_elem = get_greatest_elem(max_elems)
-    print('Minimal elements:', end=' ')
-    for el in min_elems:
-        print(el[0], end=' ')
-    print('')
-    print('Maximal elements:', end=' ')
-    for el in max_elems:
-        print(el[0], end=' ')
-    print('')
-    print('Least element:', end=' ')
-    if least_elem == -1:
-        print('None')
-    else:
-        print(least_elem)
-    print('Greatest element:', end= ' ')
-    if greatest_elem == -1:
-        print('None')
-    else:
-        print(greatest_elem)
-    
-    print('Do you want to crate Hasse\'s diagramm?)')
-    print('(1 - yes, 0 - no)')
+    print('Select the way:')
+    print('Press 1 to enter some number')
+    print('Press 2 to enter set and matrix')
     bl = input()
     if bl == '1':
-        get_diagramm_Hasse(dvdrs_list, min_elems)
-    elif bl == '0':
-        return choose_mode()
+        print('Enter some number')
+        num = int(input())
+        print('Enter exception numbers, else press 0')
+        s = input()
+        exptn = [int(i) for i in s.split(' ')]
+        dvdrs = get_set_of_common_dividers(num, exptn)
+
+        dvdrs_list = get_level_list(dvdrs)
+
+        min_elems = get_minimal_elem(dvdrs_list, True, dvdrs)
+        max_elems = get_maximal_elem(dvdrs_list, True, dvdrs)
+        least_elem = get_least_elem(min_elems)
+        greatest_elem = get_greatest_elem(max_elems)
+        print('Minimal elements:', end='{ ')
+        for el in min_elems:
+            print(el, end=' ')
+        print('}')
+        print('Maximal elements:', end='{ ')
+        for el in max_elems:
+            print(el, end=' ')
+        print('}')
+        print('Least element:', end=' ')
+        if least_elem == -1:
+            print('None')
+        else:
+            print('{',least_elem, '}')
+        print('Greatest element:', end= ' ')
+        if greatest_elem == -1:
+            print('None')
+        else:
+            print('{', greatest_elem, '}')
+
+        print('Do you want to create Hasse\'s diagramm?)')
+        print('(1 - yes, 0 - no)')
+        bl = input()
+        if bl == '1':
+            print(get_diagramm_Hasse(dvdrs_list, True, dvdrs))
+        elif bl == '0':
+            return choose_mode()
+        else:
+            print('Incorrect input!')
+
+    elif bl == '2':
+        print('Enter some set of elements')
+        s = input()
+        br = [i for i in s.split(' ')]
+
+        print('Enter the matrix values')
+        a = []
+        for i in range(len(br)):
+            a.append([int(j) for j in input().split()])
+        min_elems = get_minimal_elem(a, False, br)
+        max_elems = get_maximal_elem(a, False, br)
+        least_elem = get_least_elem(min_elems)
+        greatest_elem = get_greatest_elem(max_elems)
+        print('Minimal elements:', end='{ ')
+        for el in min_elems:
+            print(el, end=' ')
+        print('}')
+        print('Maximal elements:', end=' ')
+        for el in max_elems:
+            print(el, end=' ')
+        print('')
+        print('Least element:', end=' ')
+        if least_elem == -1:
+            print('None')
+        else:
+            print(least_elem)
+        print('Greatest element:', end= ' ')
+        if greatest_elem == -1:
+            print('None')
+        else:
+            print(greatest_elem)
+
+        print('Do you want to create Hasse\'s diagramm?)')
+        print('(1 - yes, 0 - no)')
+        bl = input()
+        if bl == '1':
+            print(get_diagramm_Hasse(a, False, br))
+        elif bl == '0':
+            return choose_mode()
+        else:
+            print('Incorrect input!')
     else:
         print('Incorrect input!')
-        return choose_mode()
+    return choose_mode()
 
 
 # Построение фактор-множества (меню)
@@ -362,7 +452,6 @@ def construction_of_factor_sets():
         a = []
         for i in range(n):
             a.append([int(j) for j in input().split()])
-        a = np.array(a)
 
         get_equivalence(a, n)
 
@@ -372,7 +461,7 @@ def construction_of_factor_sets():
         br = [int(i) for i in s.split(' ')]
         if len(br) % 2 != 0:
             print('Incorrect input')
-            launch()
+            choose_mode()
         else:
             cnt = 0
             n = max(br)
@@ -382,7 +471,6 @@ def construction_of_factor_sets():
             for i in range(len(br) // 2):
                 a[br[cnt] - 1][br[cnt + 1] - 1] = 1
                 cnt += 2
-            a = np.array(a)
 
             get_equivalence(a, n)
     elif bl == '3':
@@ -420,50 +508,6 @@ def choose_mode():
     else:
         print('Incorrect output')
         return choose_mode()
-
-# Главное меню
-def launch():
-    print('Select the way to specify a binary relation:')
-    print('Press 1 to enter matrix')
-    print('Press 2 to enter binary relation elements')
-    print('Press 3 to exit from programm')
-    bl = int(input())
-    if bl == 1:
-        print('Enter the number of verticies')
-        n = int(input())
-        print('Enter the matrix values')
-        a = []
-        for i in range(n):
-            a.append([int(j) for j in input().split()])
-        a = np.array(a)
-        print_matrix(a, n)
-        print_binary_relation(a, n)
-        choose_mode(a, n)
-    elif bl == 2:
-        print('Enter an even amount of numbers on one line')
-        s = input()
-        print(s)
-        br = [int(i) for i in s.split(' ')]
-        if len(br) % 2 != 0:
-            print('Incorrect input')
-            launch()
-        else:
-            cnt = 0
-            n = max(br)
-            a = []
-            for i in range(n):
-                a.append([0 for j in range(n)])
-            for i in range(len(br) // 2):
-                a[br[cnt] - 1][br[cnt + 1] - 1] = 1
-                cnt += 2
-            a = np.array(a)
-            br = go_to_set(a, n)
-            print_matrix(a, n)
-            print_binary_relation(br, len(br))
-            choose_mode(a, n)
-    elif bl == 3:
-        return
-    return
 
 
 choose_mode()
