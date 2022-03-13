@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 
 # Построение матрицы по бинарному отношению
 def go_to_matrix(br, n):
@@ -317,6 +318,75 @@ def print_representative_system(repsys, n):
             print('}', end=', ')
 
 
+def print_Hasse_diagramm(data, is_div_mode, set_list, set_x):
+    plt.title("Диаграмма Хассе")
+    
+    # Построение ключ: уровень, значение: все элементы
+    # на текущем уровне
+    el_and_lvl = {}    
+    for hasse_el in data:
+        el_and_lvl[hasse_el[1]] = []
+    for hasse_el in data:
+        el_and_lvl[hasse_el[1]].append(hasse_el[0])
+    
+    lim = len(el_and_lvl) * 2
+    plt.xlim(0, lim)
+    plt.ylim(0, lim)
+    x = {}
+    y = {}
+    # Нахождение координат элементов
+    for key in el_and_lvl:
+        step = len(el_and_lvl[key]) + 1
+        cur = lim / step
+        step = cur
+        for el in el_and_lvl[key]:
+            x[el] = cur
+            y[el] = float(key)
+            cur += step
+    box = { 'facecolor':'cyan',
+            'edgecolor': 'black',
+            'boxstyle': 'circle',
+            'linewidth': '2' }
+
+    if is_div_mode:
+        lines = []
+        for elem in data:
+            tmp = []
+            for i in range(len(elem[3])):
+                if elem[3][i] % elem[0] == 0:
+                    tmp.append(elem[3][i])
+            for el in tmp:
+                lines.append([elem[0], el])
+        
+        for line in lines:
+            plt.plot([x[line[0]], x[line[1]]], [y[line[0]], y[line[1]]], 'r')
+        
+        for key in x:
+            plt.text( x[key], y[key], str(key),
+                      bbox = box,
+                      horizontalalignment = 'center',
+                      color = 'black',
+                      fontsize = 9 )
+        plt.show()    
+    else:
+        lines = []
+        for i in range(len(set_list)):
+            for j in range(len(set_list[i])):
+                if set_list[i][j] and j < i:
+                    for el in data[i][2]:
+                        if set_x[j] == el:
+                            lines.append([data[i][0], set_x[j]])
+        for line in lines:
+            plt.plot([x[line[0]], x[line[1]]], [y[line[0]], y[line[1]]], 'r')
+        
+        for key in x:
+            plt.text( x[key], y[key], key,
+                      bbox = box,
+                      horizontalalignment = 'center',
+                      color = 'black',
+                      fontsize = 9 )
+        plt.show()
+
 # Построение решетки концептов (меню)
 def construction_lattice_of_concepts():
     print('Enter set of objects:')
@@ -386,7 +456,9 @@ def construction_of_Hasse_diagramm():
         print('(1 - yes, 0 - no)')
         bl = input()
         if bl == '1':
-            print(get_diagramm_Hasse(dvdrs_list, True, dvdrs))
+            diagramm = get_diagramm_Hasse(dvdrs_list, True, dvdrs)
+            print(diagramm)
+            print_Hasse_diagramm(diagramm, True, dvdrs_list, dvdrs)
         elif bl == '0':
             return choose_mode()
         else:
@@ -428,7 +500,8 @@ def construction_of_Hasse_diagramm():
         print('(1 - yes, 0 - no)')
         bl = input()
         if bl == '1':
-            print(get_diagramm_Hasse(a, False, br))
+            diagramm = get_diagramm_Hasse(a, False, br)
+            print_Hasse_diagramm(diagramm, False, a, br)
         elif bl == '0':
             return choose_mode()
         else:
