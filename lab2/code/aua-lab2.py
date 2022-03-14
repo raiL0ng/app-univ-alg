@@ -329,20 +329,27 @@ def print_Hasse_diagramm(data, is_div_mode, set_list, set_x):
     for hasse_el in data:
         el_and_lvl[hasse_el[1]].append(hasse_el[0])
     
-    lim = len(el_and_lvl) * 2
-    plt.xlim(0, lim)
-    plt.ylim(0, lim)
+    eps = len(el_and_lvl) * 2
     x = {}
     y = {}
+    x_lim = -1
+    y_lim = -1
     # Нахождение координат элементов
     for key in el_and_lvl:
         step = len(el_and_lvl[key]) + 1
-        cur = lim / step
+        cur = eps / step
         step = cur
         for el in el_and_lvl[key]:
             x[el] = cur
-            y[el] = float(key)
+            y[el] = float(key) * eps
             cur += step
+            x_lim = max(x_lim, x[el])
+            y_lim = max(y_lim, y[el])
+
+    
+    plt.xlim(0, x_lim + 1)
+    plt.ylim(0, y_lim + eps)
+
     box = { 'facecolor':'cyan',
             'edgecolor': 'black',
             'boxstyle': 'circle',
