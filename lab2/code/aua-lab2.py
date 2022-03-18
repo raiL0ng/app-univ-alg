@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import numpy as np
 # Построение матрицы по бинарному отношению
 def go_to_matrix(br, n):
     n = -1
@@ -103,7 +103,7 @@ def get_minimal_elem(slices_list, is_div_mode, set_x, strt=0):
         for i in range(strt, len(slices_list)):
             fl = True
             for j in range(strt, len(slices_list[i])):
-                if slices_list[i][j] != 0 and i != j:
+                if slices_list[j][i] != 0 and i != j:
                     fl = False
             if fl:
                 min_el_list.append(set_x[i])
@@ -125,13 +125,10 @@ def get_maximal_elem(slices_list, is_div_mode, set_x, strt=0):
         return max_el_list
     else:
         max_el_list = []
-        for i in range(strt, len(slices_list)):
-            fl = True
-            for j in range(strt, len(slices_list[i])):
-                if slices_list[j][i] != 0 and i != j:
-                    fl = False
-            if fl:
-                max_el_list.append(set_x[i])
+        max_lvl = slices_list[len(slices_list) - 1][1]
+        for elem in slices_list:
+            if max_lvl == elem[1]:
+                max_el_list.append(elem[0])
         return max_el_list
 
 
@@ -377,9 +374,11 @@ def print_Hasse_diagramm(data, is_div_mode, set_list, set_x):
         plt.show()    
     else:
         lines = []
+        set_list = np.array(set_list)
+        set_list = set_list.transpose()
         for i in range(len(set_list)):
             for j in range(len(set_list[i])):
-                if set_list[i][j] and j < i:
+                if set_list[i][j] and i > j:
                     for el in data[i][2]:
                         if set_x[j] == el:
                             lines.append([data[i][0], set_x[j]])
@@ -480,34 +479,35 @@ def construction_of_Hasse_diagramm():
         a = []
         for i in range(len(br)):
             a.append([int(j) for j in input().split()])
+        diagramm = get_diagramm_Hasse(a, False, br)
         min_elems = get_minimal_elem(a, False, br)
-        max_elems = get_maximal_elem(a, False, br)
+        max_elems = get_maximal_elem(diagramm, False, br)
         least_elem = get_least_elem(min_elems)
         greatest_elem = get_greatest_elem(max_elems)
         print('Minimal elements:', end='{ ')
         for el in min_elems:
             print(el, end=' ')
         print('}')
-        print('Maximal elements:', end=' ')
+        print('Maximal elements:', end='{ ')
         for el in max_elems:
             print(el, end=' ')
-        print('')
+        print('}')
         print('Least element:', end=' ')
         if least_elem == -1:
             print('None')
         else:
-            print(least_elem)
+            print('{',least_elem, '}')
         print('Greatest element:', end= ' ')
         if greatest_elem == -1:
             print('None')
         else:
-            print(greatest_elem)
+            print('{', greatest_elem, '}')
 
         print('Do you want to create Hasse\'s diagramm?)')
         print('(1 - yes, 0 - no)')
         bl = input()
         if bl == '1':
-            diagramm = get_diagramm_Hasse(a, False, br)
+            print(diagramm)
             print_Hasse_diagramm(diagramm, False, a, br)
         elif bl == '0':
             return choose_mode()
