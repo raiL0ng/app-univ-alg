@@ -173,55 +173,43 @@
 
     Бинарная операция $\cdot$ на множестве A называется:
 
-    \begin{enumerate}
-        \item ассоциативной, если $\forall x, y, z \in A$ выполняется равенство
-        
-        \begin{center}
-            $x \cdot (y \cdot z) = (x \cdot y) \cdot z$;
-        \end{center}
+    \begin{itemize}
+        \item идемпотентной, если $\forall x \in A$ выполняется равенство $x \cdot x = x$;
 
-        \item коммутативной, если $\forall x, y \in A$ выполняется равенство
-        
-        \begin{center}
-            $x \cdot y = y \cdot x$;
-        \end{center}
+        \item коммутативной, если $\forall x, y \in A$ выполняется равенство $x \cdot y = y \cdot x$;
 
-        \item идемпотентной, если $\forall x \in A$ выполняется равенство
-        
-        \begin{center}
-            $x \cdot x = x$;
-        \end{center}
+        \item ассоциативной, если $\forall x, y, z \in A$ выполняется равенство $x \cdot (y \cdot z) = (x \cdot y) \cdot z$;
 
         \item обратимой, если $\forall x, y \in A$, если уравнения $x \cdot a = y$ и $b \cdot x = y$  имеют решение, причем единственное;
-        \item дистрибутивной относительно операции +, если для любых $x, y, z \in A$ выполняются равенства
+        \item дистрибутивной относительно операции +, если $\forall x, y, z \in A$ выполняются равенства
         
         \begin{center}
             $x \cdot (y + z) = (x \cdot y) + (x \cdot z)$,
 
             $(y + z) \cdot x = (y \cdot x) + (z \cdot x)$;
         \end{center}
-    \end{enumerate}
+    \end{itemize}
 
     \subsection{Основные операции над бинарными отношениями}
 
-    \begin{enumerate}
-        \item Теоретико-множественные операции ($\cup, \cap, \neg$)
-        \item Обращение бинарных отношений: обратным для бинарного отношения $\rho \subset A \times B$ называется бинарное
+    \begin{itemize}
+        \item Над бинарными отношениями можно выполнять любые теоретико-множественные операции, в частности операции
+        объединения $\cup$ и пересечения $\cap$;
+        \item Обратным для бинарного отношения $\rho \subset A \times B$ называется бинарное
         отношение $\rho^{-1} \subset B \times A$, определяющееся по формуле:
         \begin{center}
-            $\rho^{-1} = $\{$(b, a) : (a, b) \in \rho \}$.
+            $\rho^{-1} = \{(b, a) : (a, b) \in \rho \}$;
         \end{center}
-        \item Композиция бинарных отношений: композицией бинарных отношений $\rho \subset A \times B$ и $\sigma \subset B \times C$
-        называется бинарное отношение $\rho\sigma \subset A \times C$, определяющееся по формуле:
+        \item Композицией бинарных отношений $\rho \subset A \times B$ и $\sigma \subset B \times C$
+        называется бинарное отношение $\rho \circ \sigma \subset A \times C$, определяющееся по формуле:
         \begin{center}
-            $\rho\sigma = $ \{$(a, c) : (a, b) \in \rho \text{ и } (b, c) \in \sigma \text{ для некоторого } b \in B
-            \}$.
+            $\rho \circ \sigma = \{ (a, c) : (a, b) \in \rho \text{ и } (b, c) \in \sigma \text{ для некоторого } b \in B \}$;
         \end{center}
-    \end{enumerate}
+    \end{itemize}
 
     \subsection{Основные операции над матрицами}
 
-    \begin{enumerate}
+    \begin{itemize}
             \item Сложение и вычитание матриц.
         
             Суммой $A + B$ матриц $A_{m \times n} = (a_{ij}) \text{ и }B_{m \times n} = (b_{ij})$ называется матрица 
@@ -238,7 +226,7 @@
         \item Произведение двух матриц.
         
             Произведением матриц $A_{m \times n} = (a_{ij}) \text{ на матрицу }B_{m \times n} = (b_{ij})$ называется матрица 
-            $C_{m \times n} = (c_{ij})$ , где $c_{ij} = \sum\limits_{p=1}^n a_{ip}b_{pj}$ для всех $i = \overline{1, m} \text{ и } j = \overline{1, n}$.
+            $C_{m \times n} = (c_{ij})$ , где $c_{ij} = \sum\limits_{k=1}^n a_{ik}b_{kj}$ для всех $i = \overline{1, m} \text{ и } j = \overline{1, n}$.
         
         \item Транспонирование матрицы.
         
@@ -251,7 +239,7 @@
             матрица $A^{-1}$ "--- такая, при умножении которой на исходную матрицу $A$ получается единичная матрица $E$.
             Это такая матрица, которая удовлетворяет равенству \[AA^{-1} = A^{-1}A = E\] 
 
-    \end{enumerate}
+    \end{itemize}
 
 
     % В решеточно упорядоченном множестве $A = (A, \leq)$ определены две бинарные операции $a \wedge b = inf\{a, b\}$ и $a \vee b = sup\{a, b\}$.
