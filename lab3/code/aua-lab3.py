@@ -1,29 +1,5 @@
 import numpy as np
 
-# Построение матрицы по бинарному отношению
-def go_to_matrix(br, n):
-    n = -1
-    for pair in br:
-        tmp = max(pair)
-        n = max(tmp, n)
-    n += 1
-    a = []
-    for i in range(n):
-        a.append([0 for j in range(n)])
-    for pair in br:
-        a[pair[0]][pair[1]] = 1
-    return np.array(a)
-
-
-# Построение бинарного отношения по матрице
-def go_to_set(a, n):
-    s = []
-    for i in range(n):
-        for j in range(n):
-            if a[i][j] == 1:
-                s.append((i, j))
-    return s
-
 
 # Построение объединение бинарных отношений
 def get_union_bin_rel(br1, br2=[]):
@@ -92,6 +68,116 @@ def get_composition_bin_rel(br1, br2=[]):
     print_binary_relation(comp_br, len(comp_br))
 
 
+#
+def get_addition_operation(a, n):
+  print('Enter values of another matrix')
+  b = []
+  for i in range(n):
+    tmp = input().split()
+    for j in range(len(tmp)):
+      try:
+        tmp[j] = float(tmp[j])
+      except:
+        k = 0
+      else:
+        tmp[j] = float(tmp[j])
+    b.append(tmp)
+  c = []
+  for i in range(n):
+    tmp = []
+    for j in range(len(a[i])):
+      tmp.append(a[i][j] + b[i][j])
+    c.append(tmp)
+  
+  return c
+
+
+#
+def get_subtraction_operation(a, n):
+  print('Enter values of another matrix')
+  b = []
+  for i in range(n):
+    tmp = input().split()
+    for j in range(len(tmp)):
+      try:
+        tmp[j] = float(tmp[j])
+      except:
+        k = 0
+      else:
+        tmp[j] = float(tmp[j])
+    b.append(tmp)
+  c = []
+  for i in range(n):
+    tmp = []
+    for j in range(len(a[i])):
+      tmp.append(a[i][j] - b[i][j])
+    c.append(tmp)
+  
+  return c
+
+
+#
+def get_multiplication_matrix_on_number(a):
+  print('Enter number:')
+  num = float(input())
+  c = []
+  for i in range(len(a)):
+    tmp = []
+    for j in range(len(a[i])):
+      tmp.append(a[i][j] * num)
+    c.append(tmp)
+
+  return c
+
+
+#
+def get_multiplication_operation(a):
+  print('Enter the number of rows')
+  n = int(input())
+  print('Enter the number of columns')
+  m = int(input())
+  print('Enter values of another matrix')
+  b = []
+  for i in range(n):
+    tmp = input().split()
+    for j in range(m):
+      try:
+        tmp[j] = float(tmp[j])
+      except:
+        k = 0
+      else:
+        tmp[j] = float(tmp[j])
+    b.append(tmp)
+  c = []
+  for i in range(m):
+    tmp = []
+    for j in range(m):
+      sum = 0
+      for k in range(n):
+        sum += a[i][k] * b[k][j]
+      tmp.append(sum)
+    c.append(tmp)
+  
+  return c
+
+
+#
+def get_transpose_operation(a):
+  c = []
+  for i in range(len(a)):
+    tmp = []
+    for j in range(len(a[i])):
+      tmp.append(a[j][i])
+    c.append(tmp)
+  
+  return c
+
+#
+def get_inverse_matrix(a):
+  a = np.array(a)
+  return np.linalg.inv(a)
+
+
 # Вывод матрицы
 def print_matrix(a, n):
     cnt = 0
@@ -116,6 +202,102 @@ def print_binary_relation(br, n):
     print(' }')
 
 
+#
+def check_idempotence(set_list, a):
+  is_idempotent = True
+  print(a)
+  for i in range(len(set_list)):
+    if a[i][i] != set_list[i]:
+      is_idempotent = False
+      break
+  if is_idempotent:
+    print('Binary operation is idempotent')
+  else:
+    print('Binary operation is not idempotent')
+
+
+#
+def check_commutative(set_list, a):
+  is_commutative = True
+  n = len(set_list)
+  for i in range(n):
+    for j in range(n):
+      if a[i][j] != a[j][i]:
+        is_commutative = False
+        break
+  if is_commutative:
+    print('Binary operation is commutative')
+  else:
+    print('Binary operation is not commutative')
+
+
+def check_associative(set_list, a):
+  is_associative = True
+  n = len(set_list)
+  for i in range(n):
+    for j in range(n):
+      for k in range(n):
+        if a[i][set_list.index(str(a[j][k]))] != a[set_list.index(str(a[i][j]))][k]:
+          is_associative = False
+          break
+  if is_associative:
+    print('Binary operation is associative')
+  else:
+    print('Binary operation is not associative')
+
+
+#
+def check_invertibility(set_list, a):
+  is_invertible = True
+  n = len(set_list)
+  for i in range(n):
+    for j in range(n):
+      if not (a[i][j] == a[j][i] == '1'):
+        is_invertible = False
+        break
+  if is_invertible:
+    print('Binary operation is invertible')
+  else:
+    print('Binary operation is not invertible')
+
+
+#
+def check_distributivity(set_list, a):
+  print('Enter matrix values')
+  for i in range(len(set_list)):
+    b = [j for j in input().split()]
+
+  is_distributive = True
+  n = len(set_list)
+  for i in range(n):
+    for j in range(n):
+      for k in range(n):
+        if (a[i][set_list.index(b[j][k])] != b[set_list.index(a[i][j])][set_list.index(a[i][k])]) \
+        or (a[set_list.index(b[j][k])][i] != b[set_list.index(a[j][i])][set_list.index(a[k][i])]):
+          is_invertible = False
+          break
+  if is_distributive:
+    print('Binary operation is distributive')
+  else:
+    print('Binary operation is not distributive')
+
+
+#
+def check_properties_mode():
+    print('Enter numbers of set:')
+    s = input()
+    set_list = [i for i in s.split(' ')]
+    print('Enter matrix values')
+    for i in range(len(set_list)):
+      a = [j for j in input().split()]
+    print('Your properties')
+    check_idempotence(set_list, a)
+    check_commutative(set_list, a)
+    check_associative(set_list, a)
+    check_invertibility(set_list, a)
+    check_distributivity(set_list, a)
+
+    choose_mode()
 #
 def check_all_bin_rel_properties(br1, br2=[]):
   if br2 == []:
@@ -170,6 +352,8 @@ def check_all_bin_rel_properties(br1, br2=[]):
       check_all_bin_rel_properties(br1, br2)
     else:
       print('Exit...')
+
+
 #
 def construction_of_binary_relation():
     print('Enter numbers of binary relation:')
@@ -208,6 +392,40 @@ def construction_of_binary_relation():
     return choose_mode()
 
 
+#
+def construction_of_matrix(a):
+  print_matrix(a, len(a))
+  n = len(a)
+  print('Choose operation:')
+  print('Press 1 to add another matrix')
+  print('Press 2 to subtract another matrix')
+  print('Press 3 to multiply this matrix on number')
+  print('Press 4 to multiply on another matrix')
+  print('Press 5 to transpose this matrix')
+  print('Press 6 to find inverse matrix')
+  bl = input()
+  if bl == '1':
+    a = get_addition_operation(a, n)
+    construction_of_matrix(a)
+  elif bl == '2':
+    a = get_subtraction_operation(a, n)
+    construction_of_matrix(a)
+  elif bl == '3':
+    a = get_multiplication_matrix_on_number(a)
+    construction_of_matrix(a)
+  elif bl == '4':
+    a = get_multiplication_operation(a)
+    construction_of_matrix(a)
+  elif bl == '5':
+    a = get_transpose_operation(a)
+    construction_of_matrix(a)
+  elif bl == '6':
+    a = get_inverse_matrix(a)
+    construction_of_matrix(a)
+  else:
+    choose_mode()
+
+
 # Главное меню
 def choose_mode():
     print('Choose mode:')
@@ -217,20 +435,27 @@ def choose_mode():
     print('Press 4 to exit')
     bl = input()
     if bl == '1':
-        print('chmod1')
+        check_properties_mode()
     elif bl == '2':
         construction_of_binary_relation()
     elif bl == '3':
-        print('chmod3')
         a = []
-        print('Enter the number of verticies')
+        print('Enter the number of rows')
         n = int(input())
+        print('Enter the number of columns')
+        m = int(input())
         print('Enter the matrix values')
         for i in range(n):
           tmp = input().split()
-          for j in range(len(tmp)):
-                tmp[j] = int(tmp[j])
+          for j in range(m):
+              try:
+                tmp[j] = float(tmp[j])
+              except:
+                k = 0
+              else:
+                tmp[j] = float(tmp[j])
           a.append(tmp)
+        construction_of_matrix(a)
     elif bl == '4':
         return
     else:
