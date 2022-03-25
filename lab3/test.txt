@@ -5,6 +5,11 @@ a	b	a b
 a	b	c d
 a	b	c d
 
+a b a b
+a	b	a b
+a	b	c d
+a	b	c d
+
 задание 2
 А:
 1 -2

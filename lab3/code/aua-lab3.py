@@ -68,7 +68,7 @@ def get_composition_bin_rel(br1, br2=[]):
     print_binary_relation(comp_br, len(comp_br))
 
 
-#
+# Выполнение операции сложения матриц
 def get_addition_operation(a, n):
   print('Enter values of another matrix')
   b = []
@@ -92,7 +92,7 @@ def get_addition_operation(a, n):
   return c
 
 
-#
+# Выполнение операции вычитания матриц
 def get_subtraction_operation(a, n):
   print('Enter values of another matrix')
   b = []
@@ -116,7 +116,7 @@ def get_subtraction_operation(a, n):
   return c
 
 
-#
+# Выполнение операции умножение матрицы на число
 def get_multiplication_matrix_on_number(a):
   print('Enter number:')
   num = float(input())
@@ -130,7 +130,7 @@ def get_multiplication_matrix_on_number(a):
   return c
 
 
-#
+# Выполнение операции умножения матриц
 def get_multiplication_operation(a):
   print('Enter the number of rows')
   n = int(input())
@@ -161,7 +161,7 @@ def get_multiplication_operation(a):
   return c
 
 
-#
+# Выполнение операции транспонирования матрицы
 def get_transpose_operation(a):
   c = []
   for i in range(len(a)):
@@ -172,7 +172,8 @@ def get_transpose_operation(a):
   
   return c
 
-#
+
+# Нахождение обратной матрицы
 def get_inverse_matrix(a):
   a = np.array(a)
   return np.linalg.inv(a)
@@ -202,10 +203,9 @@ def print_binary_relation(br, n):
     print(' }')
 
 
-#
+# Проверка операции на идемпотентность
 def check_idempotence(set_list, a):
   is_idempotent = True
-  print(a)
   for i in range(len(set_list)):
     if a[i][i] != set_list[i]:
       is_idempotent = False
@@ -216,7 +216,7 @@ def check_idempotence(set_list, a):
     print('Binary operation is not idempotent')
 
 
-#
+# Проверка операции на коммутативность
 def check_commutative(set_list, a):
   is_commutative = True
   n = len(set_list)
@@ -231,13 +231,15 @@ def check_commutative(set_list, a):
     print('Binary operation is not commutative')
 
 
+# Проверка операции на ассоциативность
 def check_associative(set_list, a):
   is_associative = True
   n = len(set_list)
   for i in range(n):
     for j in range(n):
       for k in range(n):
-        if a[i][set_list.index(str(a[j][k]))] != a[set_list.index(str(a[i][j]))][k]:
+        if a[i][set_list.index(str(a[j][k]))] != \
+          a[set_list.index(str(a[i][j]))][k]:
           is_associative = False
           break
   if is_associative:
@@ -246,7 +248,7 @@ def check_associative(set_list, a):
     print('Binary operation is not associative')
 
 
-#
+# Проверка операции на обратимость
 def check_invertibility(set_list, a):
   is_invertible = True
   n = len(set_list)
@@ -261,19 +263,22 @@ def check_invertibility(set_list, a):
     print('Binary operation is not invertible')
 
 
-#
+# Проверка операции на дистрибутивность
 def check_distributivity(set_list, a):
   print('Enter matrix values')
+  b = []
   for i in range(len(set_list)):
-    b = [j for j in input().split()]
+    b.append([j for j in input().split()])
 
   is_distributive = True
   n = len(set_list)
   for i in range(n):
     for j in range(n):
       for k in range(n):
-        if (a[i][set_list.index(b[j][k])] != b[set_list.index(a[i][j])][set_list.index(a[i][k])]) \
-        or (a[set_list.index(b[j][k])][i] != b[set_list.index(a[j][i])][set_list.index(a[k][i])]):
+        if (a[i][set_list.index(b[j][k])] != \
+           b[set_list.index(a[i][j])][set_list.index(a[i][k])]) \
+           or (a[set_list.index(b[j][k])][i] != \
+           b[set_list.index(a[j][i])][set_list.index(a[k][i])]):
           is_invertible = False
           break
   if is_distributive:
@@ -282,23 +287,36 @@ def check_distributivity(set_list, a):
     print('Binary operation is not distributive')
 
 
-#
-def check_properties_mode():
-    print('Enter numbers of set:')
-    s = input()
-    set_list = [i for i in s.split(' ')]
-    print('Enter matrix values')
-    for i in range(len(set_list)):
-      a = [j for j in input().split()]
-    print('Your properties')
-    check_idempotence(set_list, a)
-    check_commutative(set_list, a)
-    check_associative(set_list, a)
-    check_invertibility(set_list, a)
-    check_distributivity(set_list, a)
+# Проверка свойств (меню)
+def check_properties_mode(set_list, a):
+    print_matrix(a, len(a))
+    print('Press 1 to check idempotence property')
+    print('Press 2 to check commutative property')
+    print('Press 3 to check associative property')
+    print('Press 4 to check invertibility property')
+    print('Press 5 to check distributivity property')
+    print('Press 6 to exit')
+    bl = input()
+    if bl == '1':
+      check_idempotence(set_list, a)
+      check_properties_mode(set_list, a)
+    elif bl == '2':
+      check_commutative(set_list, a)
+      check_properties_mode(set_list, a)
+    elif bl == '3':
+      check_associative(set_list, a)
+      check_properties_mode(set_list, a)
+    elif bl == '4':
+      check_invertibility(set_list, a)
+      check_properties_mode(set_list, a)
+    elif bl == '5':
+      check_distributivity(set_list, a)
+      check_properties_mode(set_list, a)
+    else:
+      return choose_mode()
 
-    choose_mode()
-#
+
+# Проверка свойств бинарных отношений
 def check_all_bin_rel_properties(br1, br2=[]):
   if br2 == []:
     print('Your binary relation:')
@@ -322,7 +340,7 @@ def check_all_bin_rel_properties(br1, br2=[]):
       get_composition_bin_rel(br1)
       check_all_bin_rel_properties(br1)
     else:
-      choose_mode()
+      return choose_mode()
   else:
     print('Your binary relations:')
     print('First:', end='')
@@ -352,16 +370,17 @@ def check_all_bin_rel_properties(br1, br2=[]):
       check_all_bin_rel_properties(br1, br2)
     else:
       print('Exit...')
+      return choose_mode()
 
 
-#
+# Построение бинарных отношений
 def construction_of_binary_relation():
     print('Enter numbers of binary relation:')
     s = input()
     tmp = [i for i in s.split(' ')]
     if len(tmp) % 2 != 0:
       print('Incorrect input!')
-      choose_mode()
+      return choose_mode()
     else:
       br1 = []
       k = 0
@@ -392,7 +411,7 @@ def construction_of_binary_relation():
     return choose_mode()
 
 
-#
+# Построение матриц
 def construction_of_matrix(a):
   print_matrix(a, len(a))
   n = len(a)
@@ -423,7 +442,7 @@ def construction_of_matrix(a):
     a = get_inverse_matrix(a)
     construction_of_matrix(a)
   else:
-    choose_mode()
+    return choose_mode()
 
 
 # Главное меню
@@ -435,7 +454,14 @@ def choose_mode():
     print('Press 4 to exit')
     bl = input()
     if bl == '1':
-        check_properties_mode()
+        print('Enter numbers of set:')
+        s = input()
+        set_list = [i for i in s.split(' ')]
+        print('Enter matrix values')
+        a = []
+        for i in range(len(set_list)):
+          a.append([j for j in input().split()])
+        check_properties_mode(set_list, a)
     elif bl == '2':
         construction_of_binary_relation()
     elif bl == '3':
