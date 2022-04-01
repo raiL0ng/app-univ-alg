@@ -48,13 +48,18 @@ def check_associative(set_list, a):
 
 # Проверка операции на обратимость
 def check_invertibility(set_list, a):
-  is_invertible = True
+  is_invertible = False
   n = len(set_list)
   for i in range(n):
+    cnt1 = 0
+    cnt2 = 0
     for j in range(n):
-      if not (a[i][j] == a[j][i] == '1'):
-        is_invertible = False
-        break
+      if a[i][j] == '1':
+        cnt1 += 1
+      if a[j][i] == '1':
+        cnt2 += 1
+    if cnt1 == cnt2 == n:
+      is_invertible = True
   if is_invertible:
     print('Binary operation is invertible')
   else:
@@ -250,9 +255,11 @@ def get_multiplication_operation(a):
 # Выполнение операции транспонирования матрицы
 def get_transpose_operation(a):
   c = []
-  for i in range(len(a)):
+  n = len(a)
+  m = len(a[0])
+  for i in range(m):
     tmp = []
-    for j in range(len(a[i])):
+    for j in range(n):
       tmp.append(a[j][i])
     c.append(tmp)
   return c
@@ -365,7 +372,7 @@ def check_all_bin_rel_properties(a, b=[]):
     go_to_set(a, len(a))
     print('Second:')
     print_matrix(b, len(b))
-    go_to_set(a, len(a))
+    go_to_set(b, len(b))
     print('Choose operation:')
     print('Press 1 to get union of binary relations')
     print('Press 2 to get intersection of binary relations')
