@@ -51,54 +51,44 @@ def create_bin_rel_semigroup():
     n = len(br_list)
     print('Enter matrices dimension')
     d = int(input())
-    matrices_list = {}
+    matrices_dict = {}
     for i in range(n):
         print(f'Enter matrix values for binary relation \"{br_list[i]}\":')
         matrix = [list(map(int, input().split())) for i in range(d)]
         matrix = np.array(matrix).reshape(d, d)
-        matrices_list[br_list[i]] = matrix
+        matrices_dict[br_list[i]] = matrix
     
-    new_set = br_list.copy()
-    l = 2
-    correlations = []
+    correlations = {}
     while True:
-        combinations = []
-        for i in range(l, l + 1):
-            comb = list(product(''.join([str(elem) for elem in br_list]), repeat=i))
-            combinations += comb
-        for comb in combinations:
-            cur_matrix = matrices_list[comb[0]].copy()
-            word = comb[0]
-            for el_i in range(1, len(comb)):
-                cur_matrix *= matrices_list[comb[el_i]]
-                word += comb[el_i]
+        new_matrices_dict = {}
+        for key1, val1 in matrices_dict.items():
+            for key2, val2 in matrices_dict.items():
+                new_matrices_dict[key1 + key2] = val1 * val2
+        check_set = set(br_list.copy())
+        for key1, val1 in new_matrices_dict.items():
             fl = True
-            for key, value in matrices_list.items():
-                if (np.array_equal(cur_matrix, value)):
+            for key2, val2 in matrices_dict.items():
+                if (np.array_equal(val1, val2)) and key1 != key2:
+                    correlations[key1] = key2 
                     fl = False
-                    eq_word = key
                     break
             if fl:
-                matrices_list[word] = cur_matrix
-                new_set.append(word)
-            else:
-                correlations.append(str(word + '->' + eq_word))
-        if l == len(br_list):
+                matrices_dict[key1] = val1
+                br_list.append(key1)
+        if check_set == set(br_list):
             break
-        l += 1
     
     print("Your semigroup: ")
-    print_set(new_set, len(new_set))
+    print_set(br_list, len(br_list))
     
     print("Your semigroup (matrices): ")
-    for key, value in matrices_list.items():
+    for key, value in matrices_dict.items():
         print(key, ":\n", value)
     
     print("Your correlations: ")
-    for el in correlations:
-        print(el)
+    for key, val in correlations.items():
+        print(key + '->' + val)
     choose_mode()
-
 
 def create_semigroup_via_set_simply():
     print('Enter elements of set:')
@@ -114,31 +104,25 @@ def create_semigroup_via_set_simply():
         val = input()
         presentation[key] = val
     semigroup = set_list.copy()
-    l = 2
     while True:
-        combinations = []
-        for i in range(l, l + 1):
-            comb = list(product(''.join([str(elem) for elem in set_list]), repeat=i))
-            for el in comb:
-                tmp = ''
-                for i in el:
-                  tmp += str(i)
-                combinations.append(tmp)
-        check_semgr = semigroup.copy()
-        for comb in combinations:
-            k = 1
-            while True:
-                tmp = str(comb)
-                for key, val in presentation.items():
-                    if key in comb and comb not in semigroup:
-                        comb = comb.replace(key, val)
-                if tmp == comb:
-                    break
-            if comb not in semigroup:
-                semigroup.append(comb)
-        if set(check_semgr) == set(semigroup):
+        new_elements = []
+        for el1 in semigroup:
+            for el2 in semigroup:
+                new_word = el1 + el2
+                while True:
+                    tmp = str(new_word)
+                    for key, val in presentation.items():
+                        if key in new_word:
+                            new_word = new_word.replace(key, val)
+                    if tmp == new_word:
+                        break
+                new_elements.append(new_word)        
+        check_semgr = set(semigroup.copy())
+        for el in new_elements:
+            if el not in semigroup:
+                semigroup.append(el)
+        if check_semgr == set(semigroup):
             break
-        l += 1
 
     print("Your semigroup:")
     print(semigroup)

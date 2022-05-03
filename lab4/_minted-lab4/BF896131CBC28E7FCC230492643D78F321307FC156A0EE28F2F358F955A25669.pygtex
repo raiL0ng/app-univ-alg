@@ -52,54 +52,44 @@
     \PYG{n}{n} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{br\PYGZus{}list}\PYG{p}{)}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Enter matrices dimension\PYGZsq{}}\PYG{p}{)}
     \PYG{n}{d} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n+nb}{input}\PYG{p}{())}
-    \PYG{n}{matrices\PYGZus{}list} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+    \PYG{n}{matrices\PYGZus{}dict} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
         \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+sa}{f}\PYG{l+s+s1}{\PYGZsq{}Enter matrix values for binary relation }\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}}\PYG{n}{br\PYGZus{}list}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{l+s+si}{\PYGZcb{}}\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}\PYG{l+s+s1}{:\PYGZsq{}}\PYG{p}{)}
         \PYG{n}{matrix} \PYG{o}{=} \PYG{p}{[}\PYG{n+nb}{list}\PYG{p}{(}\PYG{n+nb}{map}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{,} \PYG{n+nb}{input}\PYG{p}{()}\PYG{o}{.}\PYG{n}{split}\PYG{p}{()))} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{d}\PYG{p}{)]}
         \PYG{n}{matrix} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{(}\PYG{n}{matrix}\PYG{p}{)}\PYG{o}{.}\PYG{n}{reshape}\PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{n}{d}\PYG{p}{)}
-        \PYG{n}{matrices\PYGZus{}list}\PYG{p}{[}\PYG{n}{br\PYGZus{}list}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]} \PYG{o}{=} \PYG{n}{matrix}
+        \PYG{n}{matrices\PYGZus{}dict}\PYG{p}{[}\PYG{n}{br\PYGZus{}list}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]]} \PYG{o}{=} \PYG{n}{matrix}
     
-    \PYG{n}{new\PYGZus{}set} \PYG{o}{=} \PYG{n}{br\PYGZus{}list}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
-    \PYG{n}{l} \PYG{o}{=} \PYG{l+m+mi}{2}
-    \PYG{n}{correlations} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{correlations} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
     \PYG{k}{while} \PYG{k+kc}{True}\PYG{p}{:}
-        \PYG{n}{combinations} \PYG{o}{=} \PYG{p}{[]}
-        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{l}\PYG{p}{,} \PYG{n}{l} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{):}
-            \PYG{n}{comb} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{product}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{elem}\PYG{p}{)} \PYG{k}{for} \PYG{n}{elem} \PYG{o+ow}{in} \PYG{n}{br\PYGZus{}list}\PYG{p}{]),} \PYG{n}{repeat}\PYG{o}{=}\PYG{n}{i}\PYG{p}{))}
-            \PYG{n}{combinations} \PYG{o}{+=} \PYG{n}{comb}
-        \PYG{k}{for} \PYG{n}{comb} \PYG{o+ow}{in} \PYG{n}{combinations}\PYG{p}{:}
-            \PYG{n}{cur\PYGZus{}matrix} \PYG{o}{=} \PYG{n}{matrices\PYGZus{}list}\PYG{p}{[}\PYG{n}{comb}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]]}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
-            \PYG{n}{word} \PYG{o}{=} \PYG{n}{comb}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{]}
-            \PYG{k}{for} \PYG{n}{el\PYGZus{}i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{comb}\PYG{p}{)):}
-                \PYG{n}{cur\PYGZus{}matrix} \PYG{o}{*=} \PYG{n}{matrices\PYGZus{}list}\PYG{p}{[}\PYG{n}{comb}\PYG{p}{[}\PYG{n}{el\PYGZus{}i}\PYG{p}{]]}
-                \PYG{n}{word} \PYG{o}{+=} \PYG{n}{comb}\PYG{p}{[}\PYG{n}{el\PYGZus{}i}\PYG{p}{]}
+        \PYG{n}{new\PYGZus{}matrices\PYGZus{}dict} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
+        \PYG{k}{for} \PYG{n}{key1}\PYG{p}{,} \PYG{n}{val1} \PYG{o+ow}{in} \PYG{n}{matrices\PYGZus{}dict}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+            \PYG{k}{for} \PYG{n}{key2}\PYG{p}{,} \PYG{n}{val2} \PYG{o+ow}{in} \PYG{n}{matrices\PYGZus{}dict}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+                \PYG{n}{new\PYGZus{}matrices\PYGZus{}dict}\PYG{p}{[}\PYG{n}{key1} \PYG{o}{+} \PYG{n}{key2}\PYG{p}{]} \PYG{o}{=} \PYG{n}{val1} \PYG{o}{*} \PYG{n}{val2}
+        \PYG{n}{check\PYGZus{}set} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{br\PYGZus{}list}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{())}
+        \PYG{k}{for} \PYG{n}{key1}\PYG{p}{,} \PYG{n}{val1} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}matrices\PYGZus{}dict}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
             \PYG{n}{fl} \PYG{o}{=} \PYG{k+kc}{True}
-            \PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n}{matrices\PYGZus{}list}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
-                \PYG{k}{if} \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array\PYGZus{}equal}\PYG{p}{(}\PYG{n}{cur\PYGZus{}matrix}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)):}
+            \PYG{k}{for} \PYG{n}{key2}\PYG{p}{,} \PYG{n}{val2} \PYG{o+ow}{in} \PYG{n}{matrices\PYGZus{}dict}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+                \PYG{k}{if} \PYG{p}{(}\PYG{n}{np}\PYG{o}{.}\PYG{n}{array\PYGZus{}equal}\PYG{p}{(}\PYG{n}{val1}\PYG{p}{,} \PYG{n}{val2}\PYG{p}{))} \PYG{o+ow}{and} \PYG{n}{key1} \PYG{o}{!=} \PYG{n}{key2}\PYG{p}{:}
+                    \PYG{n}{correlations}\PYG{p}{[}\PYG{n}{key1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{key2} 
                     \PYG{n}{fl} \PYG{o}{=} \PYG{k+kc}{False}
-                    \PYG{n}{eq\PYGZus{}word} \PYG{o}{=} \PYG{n}{key}
                     \PYG{k}{break}
             \PYG{k}{if} \PYG{n}{fl}\PYG{p}{:}
-                \PYG{n}{matrices\PYGZus{}list}\PYG{p}{[}\PYG{n}{word}\PYG{p}{]} \PYG{o}{=} \PYG{n}{cur\PYGZus{}matrix}
-                \PYG{n}{new\PYGZus{}set}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{word}\PYG{p}{)}
-            \PYG{k}{else}\PYG{p}{:}
-                \PYG{n}{correlations}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{word} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZgt{}\PYGZsq{}} \PYG{o}{+} \PYG{n}{eq\PYGZus{}word}\PYG{p}{))}
-        \PYG{k}{if} \PYG{n}{l} \PYG{o}{==} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{br\PYGZus{}list}\PYG{p}{):}
+                \PYG{n}{matrices\PYGZus{}dict}\PYG{p}{[}\PYG{n}{key1}\PYG{p}{]} \PYG{o}{=} \PYG{n}{val1}
+                \PYG{n}{br\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{key1}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{check\PYGZus{}set} \PYG{o}{==} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{br\PYGZus{}list}\PYG{p}{):}
             \PYG{k}{break}
-        \PYG{n}{l} \PYG{o}{+=} \PYG{l+m+mi}{1}
     
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Your semigroup: \PYGZdq{}}\PYG{p}{)}
-    \PYG{n}{print\PYGZus{}set}\PYG{p}{(}\PYG{n}{new\PYGZus{}set}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{new\PYGZus{}set}\PYG{p}{))}
+    \PYG{n}{print\PYGZus{}set}\PYG{p}{(}\PYG{n}{br\PYGZus{}list}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{br\PYGZus{}list}\PYG{p}{))}
     
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Your semigroup (matrices): \PYGZdq{}}\PYG{p}{)}
-    \PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n}{matrices\PYGZus{}list}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+    \PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{value} \PYG{o+ow}{in} \PYG{n}{matrices\PYGZus{}dict}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
         \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{key}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}:}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{,} \PYG{n}{value}\PYG{p}{)}
     
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Your correlations: \PYGZdq{}}\PYG{p}{)}
-    \PYG{k}{for} \PYG{n}{el} \PYG{o+ow}{in} \PYG{n}{correlations}\PYG{p}{:}
-        \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{el}\PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{val} \PYG{o+ow}{in} \PYG{n}{correlations}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{key} \PYG{o}{+} \PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZgt{}\PYGZsq{}} \PYG{o}{+} \PYG{n}{val}\PYG{p}{)}
     \PYG{n}{choose\PYGZus{}mode}\PYG{p}{()}
-
 
 \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}semigroup\PYGZus{}via\PYGZus{}set\PYGZus{}simply}\PYG{p}{():}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Enter elements of set:\PYGZsq{}}\PYG{p}{)}
@@ -115,31 +105,25 @@
         \PYG{n}{val} \PYG{o}{=} \PYG{n+nb}{input}\PYG{p}{()}
         \PYG{n}{presentation}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{=} \PYG{n}{val}
     \PYG{n}{semigroup} \PYG{o}{=} \PYG{n}{set\PYGZus{}list}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
-    \PYG{n}{l} \PYG{o}{=} \PYG{l+m+mi}{2}
     \PYG{k}{while} \PYG{k+kc}{True}\PYG{p}{:}
-        \PYG{n}{combinations} \PYG{o}{=} \PYG{p}{[]}
-        \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{l}\PYG{p}{,} \PYG{n}{l} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{):}
-            \PYG{n}{comb} \PYG{o}{=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{product}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{o}{.}\PYG{n}{join}\PYG{p}{([}\PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{elem}\PYG{p}{)} \PYG{k}{for} \PYG{n}{elem} \PYG{o+ow}{in} \PYG{n}{set\PYGZus{}list}\PYG{p}{]),} \PYG{n}{repeat}\PYG{o}{=}\PYG{n}{i}\PYG{p}{))}
-            \PYG{k}{for} \PYG{n}{el} \PYG{o+ow}{in} \PYG{n}{comb}\PYG{p}{:}
-                \PYG{n}{tmp} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
-                \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{el}\PYG{p}{:}
-                  \PYG{n}{tmp} \PYG{o}{+=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{i}\PYG{p}{)}
-                \PYG{n}{combinations}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{tmp}\PYG{p}{)}
-        \PYG{n}{check\PYGZus{}semgr} \PYG{o}{=} \PYG{n}{semigroup}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{()}
-        \PYG{k}{for} \PYG{n}{comb} \PYG{o+ow}{in} \PYG{n}{combinations}\PYG{p}{:}
-            \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{1}
-            \PYG{k}{while} \PYG{k+kc}{True}\PYG{p}{:}
-                \PYG{n}{tmp} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{comb}\PYG{p}{)}
-                \PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{val} \PYG{o+ow}{in} \PYG{n}{presentation}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
-                    \PYG{k}{if} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{comb} \PYG{o+ow}{and} \PYG{n}{comb} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{semigroup}\PYG{p}{:}
-                        \PYG{n}{comb} \PYG{o}{=} \PYG{n}{comb}\PYG{o}{.}\PYG{n}{replace}\PYG{p}{(}\PYG{n}{key}\PYG{p}{,} \PYG{n}{val}\PYG{p}{)}
-                \PYG{k}{if} \PYG{n}{tmp} \PYG{o}{==} \PYG{n}{comb}\PYG{p}{:}
-                    \PYG{k}{break}
-            \PYG{k}{if} \PYG{n}{comb} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{semigroup}\PYG{p}{:}
-                \PYG{n}{semigroup}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{comb}\PYG{p}{)}
-        \PYG{k}{if} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{check\PYGZus{}semgr}\PYG{p}{)} \PYG{o}{==} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{):}
+        \PYG{n}{new\PYGZus{}elements} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{el1} \PYG{o+ow}{in} \PYG{n}{semigroup}\PYG{p}{:}
+            \PYG{k}{for} \PYG{n}{el2} \PYG{o+ow}{in} \PYG{n}{semigroup}\PYG{p}{:}
+                \PYG{n}{new\PYGZus{}word} \PYG{o}{=} \PYG{n}{el1} \PYG{o}{+} \PYG{n}{el2}
+                \PYG{k}{while} \PYG{k+kc}{True}\PYG{p}{:}
+                    \PYG{n}{tmp} \PYG{o}{=} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{new\PYGZus{}word}\PYG{p}{)}
+                    \PYG{k}{for} \PYG{n}{key}\PYG{p}{,} \PYG{n}{val} \PYG{o+ow}{in} \PYG{n}{presentation}\PYG{o}{.}\PYG{n}{items}\PYG{p}{():}
+                        \PYG{k}{if} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}word}\PYG{p}{:}
+                            \PYG{n}{new\PYGZus{}word} \PYG{o}{=} \PYG{n}{new\PYGZus{}word}\PYG{o}{.}\PYG{n}{replace}\PYG{p}{(}\PYG{n}{key}\PYG{p}{,} \PYG{n}{val}\PYG{p}{)}
+                    \PYG{k}{if} \PYG{n}{tmp} \PYG{o}{==} \PYG{n}{new\PYGZus{}word}\PYG{p}{:}
+                        \PYG{k}{break}
+                \PYG{n}{new\PYGZus{}elements}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{new\PYGZus{}word}\PYG{p}{)}        
+        \PYG{n}{check\PYGZus{}semgr} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{semigroup}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{())}
+        \PYG{k}{for} \PYG{n}{el} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}elements}\PYG{p}{:}
+            \PYG{k}{if} \PYG{n}{el} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{semigroup}\PYG{p}{:}
+                \PYG{n}{semigroup}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{el}\PYG{p}{)}
+        \PYG{k}{if} \PYG{n}{check\PYGZus{}semgr} \PYG{o}{==} \PYG{n+nb}{set}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{):}
             \PYG{k}{break}
-        \PYG{n}{l} \PYG{o}{+=} \PYG{l+m+mi}{1}
 
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Your semigroup:\PYGZdq{}}\PYG{p}{)}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{)}
