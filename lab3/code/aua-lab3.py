@@ -82,7 +82,7 @@ def check_distributivity(set_list, a):
            b[set_list.index(a[i][j])][set_list.index(a[i][k])]) \
            or (a[set_list.index(b[j][k])][i] != \
            b[set_list.index(a[j][i])][set_list.index(a[k][i])]):
-          is_invertible = False
+          is_distributive = False
           break
   if is_distributive:
     print('Binary operation is distributive')
