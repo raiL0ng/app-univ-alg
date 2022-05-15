@@ -1,7 +1,5 @@
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
-\PYG{k+kn}{import} \PYG{n+nn}{math}
-\PYG{k+kn}{from} \PYG{n+nn}{itertools} \PYG{k+kn}{import} \PYG{n}{product}
 
 
 \PYG{k}{def} \PYG{n+nf}{print\PYGZus{}set}\PYG{p}{(}\PYG{n}{s}\PYG{p}{):}
@@ -110,15 +108,6 @@
         \PYG{n}{r}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}a}\PYG{p}{)}
         \PYG{n}{l}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{tmp\PYGZus{}b}\PYG{p}{)}
     \PYG{n}{n} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{)}
-    \PYG{c+c1}{\PYGZsh{} d = []}
-    \PYG{c+c1}{\PYGZsh{} for i in range(n):}
-    \PYG{c+c1}{\PYGZsh{}     tmp\PYGZus{}a = []}
-    \PYG{c+c1}{\PYGZsh{}     for j in range(n):}
-            \PYG{c+c1}{\PYGZsh{} if r[i][j] == l[i][j] == 1:}
-            \PYG{c+c1}{\PYGZsh{}     tmp\PYGZus{}a.append(1)}
-            \PYG{c+c1}{\PYGZsh{} else:}
-            \PYG{c+c1}{\PYGZsh{}     tmp\PYGZus{}a.append(r[i][j] + l[i][j])}
-    \PYG{c+c1}{\PYGZsh{}     d.append(tmp\PYGZus{}a)}
     \PYG{n}{d} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{zeros}\PYG{p}{((}\PYG{n}{n}\PYG{p}{,} \PYG{n}{n}\PYG{p}{))}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
         \PYG{k}{for} \PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
@@ -242,6 +231,10 @@
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Cayley table:\PYGZsq{}}\PYG{p}{)}
     \PYG{k}{for} \PYG{n}{line} \PYG{o+ow}{in} \PYG{n}{tbl}\PYG{p}{:}
         \PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{line}\PYG{p}{)}
+    
+    \PYG{k}{if} \PYG{n}{check\PYGZus{}associative}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{tbl}\PYG{p}{)} \PYG{o}{==} \PYG{k+kc}{False}\PYG{p}{:}
+        \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Cayley table isn}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{t associative!\PYGZsq{}}\PYG{p}{)}
+        \PYG{k}{return} \PYG{n}{choose\PYGZus{}mode}\PYG{p}{()}
     
     \PYG{n}{right\PYGZus{}ideals\PYGZus{}dict}\PYG{p}{,} \PYG{n}{left\PYGZus{}ideals\PYGZus{}dict} \PYG{o}{=} \PYG{n}{get\PYGZus{}and\PYGZus{}set\PYGZus{}ideals}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{tbl}\PYG{p}{)}
     

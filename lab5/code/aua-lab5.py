@@ -1,6 +1,4 @@
 import numpy as np
-import math
-from itertools import product
 
 
 def print_set(s):
@@ -109,15 +107,6 @@ def create_Grin_relation(semigroup, right_ideals_dict, left_ideals_dict):
         r.append(tmp_a)
         l.append(tmp_b)
     n = len(semigroup)
-    # d = []
-    # for i in range(n):
-    #     tmp_a = []
-    #     for j in range(n):
-            # if r[i][j] == l[i][j] == 1:
-            #     tmp_a.append(1)
-            # else:
-            #     tmp_a.append(r[i][j] + l[i][j])
-    #     d.append(tmp_a)
     d = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
@@ -241,6 +230,10 @@ def create_semigroup_via_subset():
     print('Cayley table:')
     for line in tbl:
         print(line)
+    
+    if check_associative(semigroup, tbl) == False:
+        print('Cayley table isn\'t associative!')
+        return choose_mode()
     
     right_ideals_dict, left_ideals_dict = get_and_set_ideals(semigroup, tbl)
     
