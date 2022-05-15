@@ -4,9 +4,6 @@
 \PYG{k+kn}{from} \PYG{n+nn}{itertools} \PYG{k+kn}{import} \PYG{n}{product}
 
 
-\PYG{n}{order} \PYG{o}{=} \PYG{p}{[]}
-\PYG{n}{component} \PYG{o}{=} \PYG{p}{[]}
-
 \PYG{k}{def} \PYG{n+nf}{print\PYGZus{}set}\PYG{p}{(}\PYG{n}{s}\PYG{p}{):}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZob{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{end}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{)}
     \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{1}
@@ -47,22 +44,22 @@
   \PYG{k}{return} \PYG{n}{left\PYGZus{}ideal}
 
 
-\PYG{k}{def} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{):}
+\PYG{k}{def} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{order}\PYG{p}{):}
     \PYG{n}{visited}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{k+kc}{True}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{)):}
         \PYG{n}{u} \PYG{o}{=} \PYG{n}{i}
         \PYG{k}{if} \PYG{p}{(}\PYG{o+ow}{not}\PYG{p}{(}\PYG{n}{visited}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])} \PYG{o+ow}{and} \PYG{n}{gr}\PYG{p}{[}\PYG{n}{v}\PYG{p}{][}\PYG{n}{u}\PYG{p}{]):}
-            \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{u}\PYG{p}{)}
+            \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{u}\PYG{p}{,} \PYG{n}{order}\PYG{p}{)}
     \PYG{n}{order}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{v}\PYG{p}{)}
 
 
-\PYG{k}{def} \PYG{n+nf}{dfs1}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{):}
+\PYG{k}{def} \PYG{n+nf}{dfs1}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{component}\PYG{p}{):}
     \PYG{n}{visited}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{k+kc}{True}
     \PYG{n}{component}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{v}\PYG{p}{)}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{)):}
         \PYG{n}{u} \PYG{o}{=} \PYG{n}{i}
         \PYG{k}{if} \PYG{p}{(}\PYG{o+ow}{not}\PYG{p}{(}\PYG{n}{visited}\PYG{p}{[}\PYG{n}{u}\PYG{p}{])} \PYG{o+ow}{and} \PYG{n}{t\PYGZus{}gr}\PYG{p}{[}\PYG{n}{v}\PYG{p}{][}\PYG{n}{u}\PYG{p}{]):}
-            \PYG{n}{dfs1}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{u}\PYG{p}{)}
+            \PYG{n}{dfs1}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{u}\PYG{p}{,} \PYG{n}{component}\PYG{p}{)}
 
 
 \PYG{k}{def} \PYG{n+nf}{print\PYGZus{}egg\PYGZus{}boxes}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{egg\PYGZus{}box}\PYG{p}{):}
@@ -77,16 +74,18 @@
 
 \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}egg\PYGZus{}boxes}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{d}\PYG{p}{):}
     \PYG{n}{n} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{d}\PYG{p}{)}
+    \PYG{n}{order} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{component} \PYG{o}{=} \PYG{p}{[]}
     \PYG{n}{visited} \PYG{o}{=} \PYG{p}{[}\PYG{k+kc}{False} \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)]}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
         \PYG{k}{if} \PYG{p}{(}\PYG{o+ow}{not}\PYG{p}{(}\PYG{n}{visited}\PYG{p}{[}\PYG{n}{i}\PYG{p}{])):}
-            \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{i}\PYG{p}{)}
+            \PYG{n}{dfs}\PYG{p}{(}\PYG{n}{d}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{i}\PYG{p}{,} \PYG{n}{order}\PYG{p}{)}
     \PYG{n}{visited} \PYG{o}{=} \PYG{p}{[}\PYG{k+kc}{False} \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)]}
     \PYG{n}{egg\PYGZus{}box} \PYG{o}{=} \PYG{p}{[]}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
         \PYG{n}{v} \PYG{o}{=} \PYG{n}{order}\PYG{p}{[}\PYG{n}{n} \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}} \PYG{n}{i}\PYG{p}{]}
         \PYG{k}{if} \PYG{p}{(}\PYG{o+ow}{not}\PYG{p}{(}\PYG{n}{visited}\PYG{p}{[}\PYG{n}{v}\PYG{p}{])):}
-            \PYG{n}{dfs1}\PYG{p}{(}\PYG{n}{d}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{)}
+            \PYG{n}{dfs1}\PYG{p}{(}\PYG{n}{d}\PYG{o}{.}\PYG{n}{T}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{component}\PYG{p}{)}
             \PYG{n}{egg\PYGZus{}box}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{component}\PYG{o}{.}\PYG{n}{copy}\PYG{p}{())}
             \PYG{n}{component}\PYG{o}{.}\PYG{n}{clear}\PYG{p}{()}
     \PYG{n}{order}\PYG{o}{.}\PYG{n}{clear}\PYG{p}{()}

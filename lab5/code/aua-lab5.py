@@ -3,9 +3,6 @@ import math
 from itertools import product
 
 
-order = []
-component = []
-
 def print_set(s):
     print('{', end=' ')
     k = 1
@@ -46,22 +43,22 @@ def get_left_ideal(x, set_list, c_tbl):
   return left_ideal
 
 
-def dfs(gr, visited, v):
+def dfs(gr, visited, v, order):
     visited[v] = True
     for i in range(len(gr)):
         u = i
         if (not(visited[u]) and gr[v][u]):
-            dfs(gr, visited, u)
+            dfs(gr, visited, u, order)
     order.append(v)
 
 
-def dfs1(t_gr, visited, v):
+def dfs1(t_gr, visited, v, component):
     visited[v] = True
     component.append(v)
     for i in range(len(t_gr)):
         u = i
         if (not(visited[u]) and t_gr[v][u]):
-            dfs1(t_gr, visited, u)
+            dfs1(t_gr, visited, u, component)
 
 
 def print_egg_boxes(semigroup, egg_box):
@@ -76,16 +73,18 @@ def print_egg_boxes(semigroup, egg_box):
 
 def get_egg_boxes(semigroup, d):
     n = len(d)
+    order = []
+    component = []
     visited = [False for _ in range(n)]
     for i in range(n):
         if (not(visited[i])):
-            dfs(d, visited, i)
+            dfs(d, visited, i, order)
     visited = [False for _ in range(n)]
     egg_box = []
     for i in range(n):
         v = order[n - 1 - i]
         if (not(visited[v])):
-            dfs1(d.T, visited, v)
+            dfs1(d.T, visited, v, component)
             egg_box.append(component.copy())
             component.clear()
     order.clear()
