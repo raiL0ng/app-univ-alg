@@ -2,6 +2,7 @@
 \PYG{k+kn}{import} \PYG{n+nn}{numpy} \PYG{k}{as} \PYG{n+nn}{np}
 
 
+\PYG{c+c1}{\PYGZsh{} Вывод множества}
 \PYG{k}{def} \PYG{n+nf}{print\PYGZus{}set}\PYG{p}{(}\PYG{n}{s}\PYG{p}{):}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZob{}\PYGZsq{}}\PYG{p}{,} \PYG{n}{end}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{} \PYGZsq{}}\PYG{p}{)}
     \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{1}
@@ -26,6 +27,7 @@
   \PYG{k}{return} \PYG{k+kc}{True}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение правых идеалов}
 \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}right\PYGZus{}ideal}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{set\PYGZus{}list}\PYG{p}{,} \PYG{n}{c\PYGZus{}tbl}\PYG{p}{):}
     \PYG{n}{right\PYGZus{}ideal} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{()}
     \PYG{n}{indx} \PYG{o}{=} \PYG{n}{set\PYGZus{}list}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
@@ -34,6 +36,7 @@
     \PYG{k}{return} \PYG{n}{right\PYGZus{}ideal}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение левых идеалов}
 \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}left\PYGZus{}ideal}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{n}{set\PYGZus{}list}\PYG{p}{,} \PYG{n}{c\PYGZus{}tbl}\PYG{p}{):}
   \PYG{n}{left\PYGZus{}ideal} \PYG{o}{=} \PYG{n+nb}{set}\PYG{p}{()}
   \PYG{n}{indx} \PYG{o}{=} \PYG{n}{set\PYGZus{}list}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
@@ -42,6 +45,7 @@
   \PYG{k}{return} \PYG{n}{left\PYGZus{}ideal}
 
 
+\PYG{c+c1}{\PYGZsh{} Обход в глубину (топологическая сортировка)}
 \PYG{k}{def} \PYG{n+nf}{dfs}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{order}\PYG{p}{):}
     \PYG{n}{visited}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{k+kc}{True}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{gr}\PYG{p}{)):}
@@ -51,6 +55,7 @@
     \PYG{n}{order}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{v}\PYG{p}{)}
 
 
+\PYG{c+c1}{\PYGZsh{} Обход в глубину}
 \PYG{k}{def} \PYG{n+nf}{dfs1}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{v}\PYG{p}{,} \PYG{n}{component}\PYG{p}{):}
     \PYG{n}{visited}\PYG{p}{[}\PYG{n}{v}\PYG{p}{]} \PYG{o}{=} \PYG{k+kc}{True}
     \PYG{n}{component}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{v}\PYG{p}{)}
@@ -60,6 +65,7 @@
             \PYG{n}{dfs1}\PYG{p}{(}\PYG{n}{t\PYGZus{}gr}\PYG{p}{,} \PYG{n}{visited}\PYG{p}{,} \PYG{n}{u}\PYG{p}{,} \PYG{n}{component}\PYG{p}{)}
 
 
+\PYG{c+c1}{\PYGZsh{} Вывод egg\PYGZhy{}box\PYGZhy{}картины}
 \PYG{k}{def} \PYG{n+nf}{print\PYGZus{}egg\PYGZus{}boxes}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{egg\PYGZus{}box}\PYG{p}{):}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Your egg\PYGZhy{}box\PYGZhy{}diagram:\PYGZsq{}}\PYG{p}{)}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZob{}* 1 \PYGZcb{}\PYGZsq{}}\PYG{p}{)}
@@ -70,6 +76,7 @@
         \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZcb{}\PYGZsq{}}\PYG{p}{)}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение egg\PYGZhy{}box\PYGZhy{}картины }
 \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}egg\PYGZus{}boxes}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{d}\PYG{p}{):}
     \PYG{n}{n} \PYG{o}{=} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{d}\PYG{p}{)}
     \PYG{n}{order} \PYG{o}{=} \PYG{p}{[]}
@@ -90,6 +97,7 @@
     \PYG{k}{return} \PYG{n}{egg\PYGZus{}box}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение отношеня Грина}
 \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}Grin\PYGZus{}relation}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{right\PYGZus{}ideals\PYGZus{}dict}\PYG{p}{,} \PYG{n}{left\PYGZus{}ideals\PYGZus{}dict}\PYG{p}{):}
     \PYG{n}{r} \PYG{o}{=} \PYG{p}{[]}
     \PYG{n}{l} \PYG{o}{=} \PYG{p}{[]}
@@ -127,6 +135,8 @@
 
     \PYG{n}{print\PYGZus{}egg\PYGZus{}boxes}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{egg\PYGZus{}box\PYGZus{}list}\PYG{p}{)}
 
+
+\PYG{c+c1}{\PYGZsh{} Построение идеалов относительно каждого элемента}
 \PYG{k}{def} \PYG{n+nf}{get\PYGZus{}and\PYGZus{}set\PYGZus{}ideals}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{c\PYGZus{}tbl}\PYG{p}{):}
     \PYG{n}{right\PYGZus{}ideals\PYGZus{}dict} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
     \PYG{n}{left\PYGZus{}ideals\PYGZus{}dict} \PYG{o}{=} \PYG{p}{\PYGZob{}\PYGZcb{}}
@@ -150,6 +160,7 @@
     \PYG{k}{return} \PYG{n}{right\PYGZus{}ideals\PYGZus{}dict}\PYG{p}{,} \PYG{n}{left\PYGZus{}ideals\PYGZus{}dict}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение идеалов (меню)}
 \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}ideals}\PYG{p}{():}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Enter set values:\PYGZsq{}}\PYG{p}{)}
     \PYG{n}{s} \PYG{o}{=} \PYG{n+nb}{input}\PYG{p}{()}
@@ -173,6 +184,7 @@
     \PYG{k}{return} \PYG{n}{choose\PYGZus{}mode}\PYG{p}{()}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение таблицы Кэли по полугруппе}
 \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}table}\PYG{p}{(}\PYG{n}{semigroup}\PYG{p}{,} \PYG{n}{n}\PYG{p}{,} \PYG{n}{presentation}\PYG{p}{):}
     \PYG{n}{a} \PYG{o}{=} \PYG{p}{[]}
     \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{n}\PYG{p}{):}
@@ -191,6 +203,7 @@
     \PYG{k}{return} \PYG{n}{a}
 
 
+\PYG{c+c1}{\PYGZsh{} Построение полугруппы по копредставлению}
 \PYG{k}{def} \PYG{n+nf}{create\PYGZus{}semigroup\PYGZus{}via\PYGZus{}subset}\PYG{p}{():}
     \PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Enter elements of set:\PYGZsq{}}\PYG{p}{)}
     \PYG{n}{s} \PYG{o}{=} \PYG{n+nb}{input}\PYG{p}{()}
@@ -264,5 +277,6 @@
         \PYG{k}{return} \PYG{n}{choose\PYGZus{}mode}\PYG{p}{()}
 
 
-\PYG{n}{choose\PYGZus{}mode}\PYG{p}{()}
+\PYG{k}{if} \PYG{n+nv+vm}{\PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{}} \PYG{o}{==} \PYG{l+s+s2}{\PYGZdq{}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYGZdq{}}\PYG{p}{:}
+    \PYG{n}{choose\PYGZus{}mode}\PYG{p}{()}
 \end{Verbatim}

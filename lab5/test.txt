@@ -1,11 +1,20 @@
 алгоритм 1
 
+a b c d
+b d a c
+c a d b
+d a b c
+
 a b a b
 a b a b
 a b c d
 a b c d
 
-a b c d
-b d a c
-c a d b
-d a b c
+алгоритм 3
+
+Копредставление: x y
+Определяющие соотношения:
+
+xy=yx
+xxx=x
+yy=x

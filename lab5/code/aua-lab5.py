@@ -1,6 +1,7 @@
 import numpy as np
 
 
+# Вывод множества
 def print_set(s):
     print('{', end=' ')
     k = 1
@@ -25,6 +26,7 @@ def check_associative(set_list, a):
   return True
 
 
+# Построение правых идеалов
 def get_right_ideal(x, set_list, c_tbl):
     right_ideal = set()
     indx = set_list.index(x)
@@ -33,6 +35,7 @@ def get_right_ideal(x, set_list, c_tbl):
     return right_ideal
 
 
+# Построение левых идеалов
 def get_left_ideal(x, set_list, c_tbl):
   left_ideal = set()
   indx = set_list.index(x)
@@ -41,6 +44,7 @@ def get_left_ideal(x, set_list, c_tbl):
   return left_ideal
 
 
+# Обход в глубину (топологическая сортировка)
 def dfs(gr, visited, v, order):
     visited[v] = True
     for i in range(len(gr)):
@@ -50,6 +54,7 @@ def dfs(gr, visited, v, order):
     order.append(v)
 
 
+# Обход в глубину
 def dfs1(t_gr, visited, v, component):
     visited[v] = True
     component.append(v)
@@ -59,6 +64,7 @@ def dfs1(t_gr, visited, v, component):
             dfs1(t_gr, visited, u, component)
 
 
+# Вывод egg-box-картины
 def print_egg_boxes(semigroup, egg_box):
     print('Your egg-box-diagram:')
     print('{* 1 }')
@@ -69,6 +75,7 @@ def print_egg_boxes(semigroup, egg_box):
         print('}')
 
 
+# Построение egg-box-картины 
 def get_egg_boxes(semigroup, d):
     n = len(d)
     order = []
@@ -89,6 +96,7 @@ def get_egg_boxes(semigroup, d):
     return egg_box
 
 
+# Построение отношеня Грина
 def create_Grin_relation(semigroup, right_ideals_dict, left_ideals_dict):
     r = []
     l = []
@@ -126,6 +134,8 @@ def create_Grin_relation(semigroup, right_ideals_dict, left_ideals_dict):
 
     print_egg_boxes(semigroup, egg_box_list)
 
+
+# Построение идеалов относительно каждого элемента
 def get_and_set_ideals(semigroup, c_tbl):
     right_ideals_dict = {}
     left_ideals_dict = {}
@@ -149,6 +159,7 @@ def get_and_set_ideals(semigroup, c_tbl):
     return right_ideals_dict, left_ideals_dict
 
 
+# Построение идеалов (меню)
 def create_ideals():
     print('Enter set values:')
     s = input()
@@ -172,6 +183,7 @@ def create_ideals():
     return choose_mode()
 
 
+# Построение таблицы Кэли по полугруппе
 def create_table(semigroup, n, presentation):
     a = []
     for i in range(n):
@@ -190,6 +202,7 @@ def create_table(semigroup, n, presentation):
     return a
 
 
+# Построение полугруппы по копредставлению
 def create_semigroup_via_subset():
     print('Enter elements of set:')
     s = input()
@@ -263,4 +276,5 @@ def choose_mode():
         return choose_mode()
 
 
-choose_mode()
+if __name__ == "__main__":
+    choose_mode()
